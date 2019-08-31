@@ -14,7 +14,7 @@ function App() {
 
   const getData = () => {
     setIsLoading(true);
-    axios.get('https://touchebackend.herokuapp.com/ecomm_inventory/api/panel')
+    axios.get('https://touchebackend.herokuapp.com/ecomm_inventory/api/panel/')
       .then((response) => {
         response.data.success ? setData(response.data.content) : setData([]);
       }).then(() => {
