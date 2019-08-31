@@ -4,9 +4,9 @@ import ReactTable from 'react-table';
 import axios from 'axios';
 import 'react-table/react-table.css';
 import 'antd/dist/antd.css';
-import {Button, Typography} from 'antd';
+import { Button, Typography } from 'antd';
 
-const {Title} = Typography;
+const { Title } = Typography;
 
 function App() {
   const [data, setData] = useState([]);
@@ -14,25 +14,25 @@ function App() {
 
   const getData = () => {
     setIsLoading(true);
-    axios.get('http://ec2-3-19-28-161.us-east-2.compute.amazonaws.com/panel/')
+    axios.get('https://touchebackend.herokuapp.com/ecomm_inventory/api/panel')
       .then((response) => {
-      response.data.success ? setData(response.data.content) : setData([]);
-    }).then(() => {
-      setIsLoading(false);
-    });
-  }
+        response.data.success ? setData(response.data.content) : setData([]);
+      }).then(() => {
+        setIsLoading(false);
+      });
+  };
 
   const updateDatabase = () => {
-    setIsLoading(true)
-    axios.get('http://ec2-3-19-28-161.us-east-2.compute.amazonaws.com/autoupdate/')
+    setIsLoading(true);
+    axios.get('https://touchebackend.herokuapp.com/ecomm_inventory/api/update_id_ean_database')
       .then((response) => {
-        response.data.success ? alert('Database updated.') : alert('Error: Couldnt update' +
-          ' database');
+        response.data.success ? alert('Database updated.') : alert('Error: Couldnt update'
+                                                                   + ' database');
       })
       .then(() => {
         setIsLoading(false);
-      })
-  }
+      });
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -83,30 +83,51 @@ function App() {
           accessor: d => getTime(new Date(d.updated_at)),
         }],
     }];
-  const pageSizeOptions = [5, 10, 15, 20, 25, 50, 100]
+  const pageSizeOptions = [5, 10, 15, 20, 25, 50, 100];
   return (
-      <div>
-        <div className='header'>
-          <Title style={{marginTop: 15}}>Shopify-Nebim Stok Entegrasyonu</Title>
-        </div>
-        <div className='header' style = {{marginBottom: 25}}>
-          <Button onClick = {() => getData()} loading = {isLoading} style={{marginRight: 30, marginLeft: 30}} type="default" size={"large"}>Veriyi Yenile</Button>
-          <Button onClick = {() => updateDatabase()} loading = {isLoading} style={{marginRight: 30, marginLeft: 30}} type="default" size={"large"}>Veritabanını
-            Güncelle</Button>
-          <Button loading = {isLoading} style={{marginRight: 30, marginLeft: 30}} type="danger" size={"large"}>Stoğu
-            Aktar</Button>
-        </div>
-        <ReactTable
-          className="-striped -highlight"
-          data={data}
-          columns={columns}
-          loading={isLoading}
-          filterable
-          pageSizeOptions= {pageSizeOptions}
-          defaultPageSize= {15}
-        />
+    <div>
+      <div className="header">
+        <Title style={{ marginTop: 15 }}>Shopify-Nebim Stok Entegrasyonu</Title>
       </div>
-      );
-      }
+      <div className="header" style={{ marginBottom: 25 }}>
+        <Button
+          onClick={() => getData()}
+          loading={isLoading}
+          style={{ marginRight: 30, marginLeft: 30 }}
+          type="default"
+          size="large"
+        >
+Veriyi Yenile
+        </Button>
+        <Button
+          onClick={() => updateDatabase()}
+          loading={isLoading}
+          style={{ marginRight: 30, marginLeft: 30 }}
+          type="default"
+          size="large"
+        >
+Veritabanını
+          Güncelle
+        </Button>
+        <Button
+          style={{ marginRight: 30, marginLeft: 30 }}
+          type="danger"
+          size="large"
+        >
+Stoğu
+          Aktar
+        </Button>
+      </div>
+      <ReactTable
+        className="-striped -highlight"
+        data={data}
+        columns={columns}
+        filterable
+        pageSizeOptions={pageSizeOptions}
+        defaultPageSize={15}
+      />
+    </div>
+  );
+}
 
-      export default App;
+export default App;
