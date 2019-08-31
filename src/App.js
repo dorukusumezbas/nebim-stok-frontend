@@ -24,7 +24,7 @@ function App() {
 
   const updateDatabase = () => {
     setIsLoading(true);
-    axios.get('https://touchebackend.herokuapp.com/ecomm_inventory/api/update_id_ean_database/')
+    axios.post('https://touchebackend.herokuapp.com/ecomm_inventory/api/update_id_ean_database/')
       .then((response) => {
         response.data.success ? alert('Database updated.') : alert('Error: Couldnt update'
                                                                    + ' database');
