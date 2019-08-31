@@ -30,7 +30,12 @@ function App() {
                                                                    + ' database');
       })
       .then(() => {
-        setIsLoading(false);
+        axios.get('https://touchebackend.herokuapp.com/ecomm_inventory/api/panel/')
+          .then((response) => {
+            response.data.success ? setData(response.data.content) : setData([]);
+          }).then(() => {
+            setIsLoading(false);
+          });
       });
   };
   useEffect(() => {
@@ -97,7 +102,7 @@ function App() {
           type="default"
           size="large"
         >
-Veriyi Yenile
+          Veriyi Yenile
         </Button>
         <Button
           onClick={() => updateDatabase()}
@@ -105,7 +110,7 @@ Veriyi Yenile
           type="default"
           size="large"
         >
-Veritabanını
+          Veritabanını
           Güncelle
         </Button>
         <Button
@@ -113,7 +118,7 @@ Veritabanını
           type="danger"
           size="large"
         >
-Stoğu
+          Stoğu
           Aktar
         </Button>
       </div>
